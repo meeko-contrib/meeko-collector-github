@@ -78,7 +78,8 @@ func handleGitHubHook(w http.ResponseWriter, r *http.Request) {
 	// Publish the event.
 	if err := collector.Publish("github."+event, eventObject); err != nil {
 		http.Error(w, "Event Not Published", http.StatusInternalServerError)
-		return
+		// This is a critical error, panic.
+		panic(err)
 	}
 
 	w.WriteHeader(http.StatusNoContent)
