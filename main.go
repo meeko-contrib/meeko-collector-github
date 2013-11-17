@@ -22,7 +22,6 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	auth "github.com/abbot/go-http-auth"
 	collector "github.com/salsita/cider-abstract-webhook"
 )
 
