@@ -22,7 +22,7 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	collector "github.com/salsita/cider-abstract-webhook"
+	collector "github.com/salsita-cider/cider-abstract-webhook"
 )
 
 const (
