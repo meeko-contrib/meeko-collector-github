@@ -36,8 +36,8 @@ func main() {
 
 func handleGitHubHook(w http.ResponseWriter, r *http.Request) {
 	// X-Github-Event header must be present.
-	event := r.Header.Get("X-Github-Event")
-	if event == "" {
+	eventType := r.Header.Get("X-Github-Event")
+	if eventType == "" {
 		http.Error(w, "X-Github-Event Header Missing", statusUnprocessableEntity)
 		return
 	}
@@ -45,7 +45,7 @@ func handleGitHubHook(w http.ResponseWriter, r *http.Request) {
 	var eventBody []byte
 
 	// Push event is different for historical reasons.
-	if event == "push" {
+	if eventType == "push" {
 		p := r.FormValue("payload")
 		if p == "" {
 			http.Error(w, "Payload Form Value Missing", statusUnprocessableEntity)
@@ -67,15 +67,15 @@ func handleGitHubHook(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Unmarshal the event object.
-	var eventObject map[string]interface{}
-	err := json.Unmarshal(eventBody, &eventObject)
+	var event map[string]interface{}
+	err := json.Unmarshal(eventBody, &event)
 	if err != nil {
 		http.Error(w, "Invalid Json", http.StatusBadRequest)
 		return
 	}
 
 	// Publish the event.
-	if err := collector.Publish("github."+event, eventObject); err != nil {
+	if err := collector.Publish("github."+eventType, event); err != nil {
 		http.Error(w, "Event Not Published", http.StatusInternalServerError)
 		// This is a critical error, panic.
 		panic(err)

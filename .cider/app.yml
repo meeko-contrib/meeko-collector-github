@@ -1,6 +1,3 @@
 name: "collector-github"
 version: "0.0.1"
 description: "Collector for GitHub events"
-dependencies:
-  - name: "abstract-webhook"
-    url: "git+ssh://git@github.com/salsita-cider/cider-abstract-webhook"
