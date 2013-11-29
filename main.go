@@ -17,69 +17,10 @@
 
 package main
 
-import (
-	"encoding/json"
-	"io/ioutil"
-	"net/http"
-
-	collector "github.com/salsita-cider/cider-abstract-webhook"
-)
-
-const (
-	statusUnprocessableEntity = 422
-	maxBodySize               = int64(10 << 20)
-)
+import receiver "github.com/salsita-cider/cider-webhook-receiver"
 
 func main() {
-	collector.ListenAndServe(handleGitHubHook)
-}
-
-func handleGitHubHook(w http.ResponseWriter, r *http.Request) {
-	// X-Github-Event header must be present.
-	eventType := r.Header.Get("X-Github-Event")
-	if eventType == "" {
-		http.Error(w, "X-Github-Event Header Missing", statusUnprocessableEntity)
-		return
-	}
-
-	var eventBody []byte
-
-	// Push event is different for historical reasons.
-	if eventType == "push" {
-		p := r.FormValue("payload")
-		if p == "" {
-			http.Error(w, "Payload Form Value Missing", statusUnprocessableEntity)
-			return
-		}
-
-		eventBody = []byte(p)
-	} else {
-		bodyReader := http.MaxBytesReader(w, r.Body, maxBodySize)
-		defer bodyReader.Close()
-
-		body, err := ioutil.ReadAll(bodyReader)
-		if err != nil {
-			http.Error(w, "Request Payload Too Large", http.StatusRequestEntityTooLarge)
-			return
-		}
-
-		eventBody = body
-	}
-
-	// Unmarshal the event object.
-	var event map[string]interface{}
-	err := json.Unmarshal(eventBody, &event)
-	if err != nil {
-		http.Error(w, "Invalid Json", http.StatusBadRequest)
-		return
-	}
-
-	// Publish the event.
-	if err := collector.Publish("github."+eventType, event); err != nil {
-		http.Error(w, "Event Not Published", http.StatusInternalServerError)
-		// This is a critical error, panic.
-		panic(err)
-	}
-
-	w.WriteHeader(http.StatusNoContent)
+	receiver.ListenAndServe(&GitHubWebhookHandler{
+		Forward: receiver.Forward,
+	})
 }
