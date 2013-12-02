@@ -20,14 +20,14 @@ func TestGitHubWebhookHandler_HandlePushEvent(t *testing.T) {
 		postType = "push"
 		postBody = getRandomPayload()
 
-		emittedType string
-		emittedBody interface{}
+		forwardedType string
+		forwardedBody interface{}
 	)
 
 	handler := &GitHubWebhookHandler{
 		Forward: func(eventType string, eventBody interface{}) error {
-			emittedType = eventType
-			emittedBody = eventBody
+			forwardedType = eventType
+			forwardedBody = eventBody
 
 			return nil
 		},
@@ -53,14 +53,14 @@ func TestGitHubWebhookHandler_HandlePushEvent(t *testing.T) {
 
 		handler.ServeHTTP(rw, req)
 
-		if rw.Code != http.StatusNoContent {
+		if rw.Code != http.StatusAccepted {
 			t.Fatalf("Unexpected status code returned: expected %d, received %d %s",
-				http.StatusNoContent, rw.Code, rw.Body.String())
+				http.StatusAccepted, rw.Code, rw.Body.String())
 		}
 
-		Convey("A push event with the right payload should be emitted", func() {
-			So(emittedType, ShouldEqual, "github."+postType)
-			So(emittedBody, ShouldResemble, postBody)
+		Convey("A push event with the right payload should be forwarded", func() {
+			So(forwardedType, ShouldEqual, "github."+postType)
+			So(forwardedBody, ShouldResemble, postBody)
 		})
 	})
 }
@@ -71,14 +71,14 @@ func TestGitHubWebhookHandler_HandlePullRequestEvent(t *testing.T) {
 		postType = "pull_request"
 		postBody = getRandomPayload()
 
-		emittedType string
-		emittedBody interface{}
+		forwardedType string
+		forwardedBody interface{}
 	)
 
 	handler := &GitHubWebhookHandler{
 		Forward: func(eventType string, eventBody interface{}) error {
-			emittedType = eventType
-			emittedBody = eventBody
+			forwardedType = eventType
+			forwardedBody = eventBody
 
 			return nil
 		},
@@ -101,14 +101,14 @@ func TestGitHubWebhookHandler_HandlePullRequestEvent(t *testing.T) {
 
 		handler.ServeHTTP(rw, req)
 
-		if rw.Code != http.StatusNoContent {
+		if rw.Code != http.StatusAccepted {
 			t.Fatalf("Unexpected status code returned: expected %d, received %d %s",
-				http.StatusNoContent, rw.Code, rw.Body.String())
+				http.StatusAccepted, rw.Code, rw.Body.String())
 		}
 
-		Convey("A pull request event with the right payload should be emitted", func() {
-			So(emittedType, ShouldEqual, "github."+postType)
-			So(emittedBody, ShouldResemble, postBody)
+		Convey("A pull request event with the right payload should be forwarded", func() {
+			So(forwardedType, ShouldEqual, "github."+postType)
+			So(forwardedBody, ShouldResemble, postBody)
 		})
 	})
 }

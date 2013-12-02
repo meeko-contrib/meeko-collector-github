@@ -81,5 +81,5 @@ func (handler *GitHubWebhookHandler) ServeHTTP(w http.ResponseWriter, r *http.Re
 		panic(err)
 	}
 
-	w.WriteHeader(http.StatusNoContent)
+	w.WriteHeader(http.StatusAccepted)
 }
