@@ -1,0 +1,11 @@
+{
+  "name": "web",
+  "active": true,
+  "events": [
+    "issues"
+  ],
+  "config": {
+    "url": "https://workflow.salsitatest.com/collectors/github",
+    "content_type": "json"
+  }
+}
