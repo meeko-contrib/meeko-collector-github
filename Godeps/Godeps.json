@@ -1,0 +1,85 @@
+{
+	"ImportPath": "cider-collector-github",
+	"GoVersion": "go1.2",
+	"Deps": [
+		{
+			"ImportPath": "github.com/cider/go-cider/cider/services",
+			"Rev": "b0c5232d9c4173e878518cf6f2b6b2a783d094b7"
+		},
+		{
+			"ImportPath": "github.com/cider/go-cider/cider/transports/zmq3/logging",
+			"Rev": "b0c5232d9c4173e878518cf6f2b6b2a783d094b7"
+		},
+		{
+			"ImportPath": "github.com/cider/go-cider/cider/transports/zmq3/loop",
+			"Rev": "b0c5232d9c4173e878518cf6f2b6b2a783d094b7"
+		},
+		{
+			"ImportPath": "github.com/cider/go-cider/cider/transports/zmq3/pubsub",
+			"Rev": "b0c5232d9c4173e878518cf6f2b6b2a783d094b7"
+		},
+		{
+			"ImportPath": "github.com/cider/go-cider/cider/utils/codecs",
+			"Rev": "b0c5232d9c4173e878518cf6f2b6b2a783d094b7"
+		},
+		{
+			"ImportPath": "github.com/cihub/seelog",
+			"Comment": "go1.0",
+			"Rev": "239994af72cef28bd0e246cd6c7336244bcc8d19"
+		},
+		{
+			"ImportPath": "github.com/dmotylev/nutrition",
+			"Rev": "9a305a8ca773d89a1770aebc82efc6e1c7bbd4ea"
+		},
+		{
+			"ImportPath": "github.com/jacobsa/oglematchers",
+			"Rev": "00a5a2616650f55dd84f982eeb13153c5e1cffad"
+		},
+		{
+			"ImportPath": "github.com/pebbe/zmq3",
+			"Rev": "864ffc49d2e319fbaec3d0b3290b34241c1653b1"
+		},
+		{
+			"ImportPath": "github.com/salsita-cider/cider-webhook-receiver",
+			"Rev": "14ae386ceb4f62879bcbfe7d24f06fa35b3dd528"
+		},
+		{
+			"ImportPath": "github.com/smartystreets/goconvey/assertions",
+			"Comment": "1.4.0-109-gbc6d5dc",
+			"Rev": "bc6d5dc3d7b36a18fdf315fb5686bb0e617f34bf"
+		},
+		{
+			"ImportPath": "github.com/smartystreets/goconvey/convey",
+			"Comment": "1.4.0-109-gbc6d5dc",
+			"Rev": "bc6d5dc3d7b36a18fdf315fb5686bb0e617f34bf"
+		},
+		{
+			"ImportPath": "github.com/smartystreets/goconvey/execution",
+			"Comment": "1.4.0-109-gbc6d5dc",
+			"Rev": "bc6d5dc3d7b36a18fdf315fb5686bb0e617f34bf"
+		},
+		{
+			"ImportPath": "github.com/smartystreets/goconvey/gotest",
+			"Comment": "1.4.0-109-gbc6d5dc",
+			"Rev": "bc6d5dc3d7b36a18fdf315fb5686bb0e617f34bf"
+		},
+		{
+			"ImportPath": "github.com/smartystreets/goconvey/printing",
+			"Comment": "1.4.0-109-gbc6d5dc",
+			"Rev": "bc6d5dc3d7b36a18fdf315fb5686bb0e617f34bf"
+		},
+		{
+			"ImportPath": "github.com/smartystreets/goconvey/reporting",
+			"Comment": "1.4.0-109-gbc6d5dc",
+			"Rev": "bc6d5dc3d7b36a18fdf315fb5686bb0e617f34bf"
+		},
+		{
+			"ImportPath": "github.com/tchap/go-patricia/patricia",
+			"Rev": "c34c3f43b1a5a63f9a886a4cb51a2854e5fdcafb"
+		},
+		{
+			"ImportPath": "github.com/ugorji/go/codec",
+			"Rev": "71c2886f5a673a35f909803f38ece5810165097b"
+		}
+	]
+}
