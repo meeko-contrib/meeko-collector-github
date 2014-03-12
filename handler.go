@@ -21,8 +21,6 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
-
-	receiver "github.com/salsita-cider/cider-webhook-receiver"
 )
 
 const (
@@ -31,7 +29,7 @@ const (
 )
 
 type GitHubWebhookHandler struct {
-	Forward receiver.ForwardFunc
+	Forward func(eventType string, eventBody interface{}) error
 }
 
 func (handler *GitHubWebhookHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {

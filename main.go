@@ -20,7 +20,5 @@ package main
 import receiver "github.com/salsita-cider/cider-webhook-receiver"
 
 func main() {
-	receiver.ListenAndServe(&GitHubWebhookHandler{
-		Forward: receiver.Forward,
-	})
+	receiver.ListenAndServe(&GitHubWebhookHandler{receiver.PubSub.Publish})
 }
