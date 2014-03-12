@@ -23,6 +23,7 @@ func main() {
 	receiver.ListenAndServe(&GitHubWebhookHandler{
 		func(eventType string, eventObject interface{}) error {
 			receiver.Logger.Infof("Forwarding %s\n", eventType)
+			receiver.Logger.Debugf("Forwarding %s containing %v\n", eventType, eventObject)
 			return receiver.PubSub.Publish(eventType, eventObject)
 		},
 	})
