@@ -41,7 +41,7 @@
 		},
 		{
 			"ImportPath": "github.com/salsita-cider/cider-webhook-receiver",
-			"Rev": "14ae386ceb4f62879bcbfe7d24f06fa35b3dd528"
+			"Rev": "428777a5893ce56c286521165da63844db8b7452"
 		},
 		{
 			"ImportPath": "github.com/smartystreets/goconvey/assertions",
@@ -75,7 +75,7 @@
 		},
 		{
 			"ImportPath": "github.com/tchap/go-patricia/patricia",
-			"Rev": "c34c3f43b1a5a63f9a886a4cb51a2854e5fdcafb"
+			"Rev": "ba297c263b114d490151419d3f03eaf0a2583917"
 		},
 		{
 			"ImportPath": "github.com/ugorji/go/codec",

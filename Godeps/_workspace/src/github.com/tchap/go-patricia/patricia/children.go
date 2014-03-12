@@ -48,7 +48,7 @@ func (list *sparseChildList) add(child *Trie) childList {
 	}
 
 	// Otherwise we have to transform to the dense list type.
-	return newDenseChildList(list)
+	return newDenseChildList(list, child)
 }
 
 func (list *sparseChildList) replace(b byte, child *Trie) {
@@ -113,7 +113,7 @@ type denseChildList struct {
 	children []*Trie
 }
 
-func newDenseChildList(list *sparseChildList) childList {
+func newDenseChildList(list *sparseChildList, child *Trie) childList {
 	var (
 		min int = 255
 		max int = 0
@@ -128,16 +128,25 @@ func newDenseChildList(list *sparseChildList) childList {
 		}
 	}
 
+	b := int(child.prefix[0])
+	if b < min {
+		min = b
+	}
+	if b > max {
+		max = b
+	}
+
 	children := make([]*Trie, max-min+1)
 	for _, child := range list.children {
-		children[min+int(child.prefix[0])] = child
+		children[int(child.prefix[0])-min] = child
 	}
+	children[int(child.prefix[0])-min] = child
 
 	return &denseChildList{min, max, children}
 }
 
 func (list *denseChildList) length() int {
-	return list.max - list.min
+	return list.max - list.min + 1
 }
 
 func (list *denseChildList) head() *Trie {
@@ -149,10 +158,10 @@ func (list *denseChildList) add(child *Trie) childList {
 
 	switch {
 	case list.min <= b && b <= list.max:
-		if list.children[b] != nil {
+		if list.children[b-list.min] != nil {
 			panic("dense child list collision detected")
 		}
-		list.children[b] = child
+		list.children[b-list.min] = child
 
 	case b < list.min:
 		children := make([]*Trie, list.max-b+1)
@@ -161,9 +170,9 @@ func (list *denseChildList) add(child *Trie) childList {
 		list.children = children
 		list.min = b
 
-	default:
+	default: // b > list.max
 		children := make([]*Trie, b-list.min+1)
-		children[b] = child
+		children[b-list.min] = child
 		copy(children, list.children)
 		list.children = children
 		list.max = b
@@ -173,17 +182,17 @@ func (list *denseChildList) add(child *Trie) childList {
 }
 
 func (list *denseChildList) replace(b byte, child *Trie) {
-	list.children[int(b)] = nil
-	list.children[int(child.prefix[0])] = child
+	list.children[int(b)-list.min] = nil
+	list.children[int(child.prefix[0])-list.min] = child
 }
 
 func (list *denseChildList) remove(child *Trie) {
-	b := int(child.prefix[0])
-	if list.children[b] == nil {
+	i := int(child.prefix[0]) - list.min
+	if list.children[i] == nil {
 		// This is not supposed to be reached.
 		panic("removing non-existent child")
 	}
-	list.children[b] = child
+	list.children[i] = nil
 }
 
 func (list *denseChildList) next(b byte) *Trie {
@@ -191,7 +200,7 @@ func (list *denseChildList) next(b byte) *Trie {
 	if i < list.min || list.max < i {
 		return nil
 	}
-	return list.children[i]
+	return list.children[i-list.min]
 }
 
 func (list *denseChildList) walk(prefix *Prefix, visitor VisitorFunc) error {
@@ -199,16 +208,18 @@ func (list *denseChildList) walk(prefix *Prefix, visitor VisitorFunc) error {
 		if child == nil {
 			continue
 		}
+		*prefix = append(*prefix, child.prefix...)
 		if child.item != nil {
 			if err := visitor(*prefix, child.item); err != nil {
 				if err == SkipSubtree {
+					*prefix = (*prefix)[:len(*prefix)-len(child.prefix)]
 					continue
 				}
+				*prefix = (*prefix)[:len(*prefix)-len(child.prefix)]
 				return err
 			}
 		}
 
-		*prefix = append(*prefix, child.prefix...)
 		err := child.children.walk(prefix, visitor)
 		*prefix = (*prefix)[:len(*prefix)-len(child.prefix)]
 		if err != nil {
