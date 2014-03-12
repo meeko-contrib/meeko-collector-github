@@ -29,7 +29,7 @@ const (
 )
 
 type GitHubWebhookHandler struct {
-	Forward func(eventType string, eventBody interface{}) error
+	Forward func(eventType string, eventObject interface{}) error
 }
 
 func (handler *GitHubWebhookHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
