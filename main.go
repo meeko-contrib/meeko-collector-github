@@ -22,7 +22,7 @@ import receiver "github.com/salsita-cider/cider-webhook-receiver"
 func main() {
 	receiver.ListenAndServe(&GitHubWebhookHandler{
 		func(eventType string, eventObject interface{}) error {
-			receiver.Logger.Infof("Forwarding %s\n", eventType)
+			receiver.Logger.Infof("Forwarding %s", eventType)
 			return receiver.PubSub.Publish(eventType, eventObject)
 		},
 	})
