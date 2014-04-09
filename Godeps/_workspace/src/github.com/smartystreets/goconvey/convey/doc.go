@@ -3,10 +3,7 @@
 // packages from this project as they serve internal purposes.
 package convey
 
-import (
-	"github.com/smartystreets/goconvey/execution"
-	"github.com/smartystreets/goconvey/reporting"
-)
+import "github.com/smartystreets/goconvey/convey/reporting"
 
 // Convey is the method intended for use when declaring the scopes
 // of a specification. Each scope has a description and a func()
@@ -35,41 +32,53 @@ func Convey(items ...interface{}) {
 // The reporter will be notified that this step was skipped.
 func SkipConvey(items ...interface{}) {
 	entry := discover(items)
-	entry.Action = execution.NewSkippedAction(skipReport)
+	entry.action = newSkippedAction(skipReport)
 	register(entry)
 }
 
-func register(entry *execution.Registration) {
-	if entry.Test != nil {
-		runner.Begin(entry)
-		runner.Run()
+// FocusConvey is has the inverse effect of SkipConvey. If the top-level
+// Convey is changed to `FocusConvey`, only nested scopes that are defined
+// with FocusConvey will be run. The rest will be ignored completely. This
+// is handy when debugging a large suite that runs a misbehaving function
+// repeatedly as you can disable all but one of that function
+// without swaths of `SkipConvey` calls, just a targeted chain of calls
+// to FocusConvey.
+func FocusConvey(items ...interface{}) {
+	entry := discover(items)
+	entry.Focus = true
+	register(entry)
+}
+
+func register(entry *registration) {
+	if entry.IsTopLevel() {
+		suites.Run(entry)
 	} else {
-		runner.Register(entry)
+		suites.Current().Register(entry)
 	}
 }
 
 func skipReport() {
-	reporter.Report(reporting.NewSkipReport())
+	suites.Current().Report(reporting.NewSkipReport())
 }
 
 // Reset registers a cleanup function to be run after each Convey()
 // in the same scope. See the examples package for a simple use case.
 func Reset(action func()) {
-	runner.RegisterReset(execution.NewAction(action))
+	suites.Current().RegisterReset(newAction(action))
 }
 
 // So is the means by which assertions are made against the system under test.
-// The majority of exported names in this package begin with the word 'Should'
-// and describe how the first argument (actual) should compare with any of the
-// final (expected) arguments. How many final arguments are accepted depends on
-// the particular assertion that is passed in as the assert argument.
+// The majority of exported names in the assertions package begin with the word
+// 'Should' and describe how the first argument (actual) should compare with any
+// of the final (expected) arguments. How many final arguments are accepted
+// depends on the particular assertion that is passed in as the assert argument.
 // See the examples package for use cases and the assertions package for
 // documentation on specific assertion methods.
 func So(actual interface{}, assert assertion, expected ...interface{}) {
 	if result := assert(actual, expected...); result == assertionSuccess {
-		reporter.Report(reporting.NewSuccessReport())
+		suites.Current().Report(reporting.NewSuccessReport())
 	} else {
-		reporter.Report(reporting.NewFailureReport(result))
+		suites.Current().Report(reporting.NewFailureReport(result))
 	}
 }
 

@@ -2,13 +2,15 @@ package convey
 
 import (
 	"fmt"
-	"github.com/smartystreets/goconvey/execution"
-	"github.com/smartystreets/goconvey/reporting"
+	"net/http"
+	"net/http/httptest"
 	"path"
 	"runtime"
 	"strconv"
 	"strings"
 	"testing"
+
+	"github.com/smartystreets/goconvey/convey/reporting"
 )
 
 func TestSingleScopeReported(t *testing.T) {
@@ -43,6 +45,17 @@ func TestFailureReported(t *testing.T) {
 	expectEqual(t, "Begin|A|Failure|Exit|End", myReporter.wholeStory())
 }
 
+func TestFirstFailureEndsScopeExecution(t *testing.T) {
+	myReporter, test := setupFakeReporter()
+
+	Convey("A", test, func() {
+		So(1, ShouldBeNil)
+		So(nil, ShouldBeNil)
+	})
+
+	expectEqual(t, "Begin|A|Failure|Exit|End", myReporter.wholeStory())
+}
+
 func TestComparisonFailureDeserializedAndReported(t *testing.T) {
 	myReporter, test := setupFakeReporter()
 
@@ -69,11 +82,11 @@ func TestSuccessAndFailureReported(t *testing.T) {
 	myReporter, test := setupFakeReporter()
 
 	Convey("A", test, func() {
-		So(1, ShouldBeNil)
 		So(nil, ShouldBeNil)
+		So(1, ShouldBeNil)
 	})
 
-	expectEqual(t, "Begin|A|Failure|Success|Exit|End", myReporter.wholeStory())
+	expectEqual(t, "Begin|A|Success|Failure|Exit|End", myReporter.wholeStory())
 }
 
 func TestIncompleteActionReportedAsSkipped(t *testing.T) {
@@ -175,6 +188,19 @@ func TestIterativeConveysReported(t *testing.T) {
 	expectEqual(t, "Begin|A|0|Success|Exit|Exit|A|1|Success|Exit|Exit|A|2|Success|Exit|Exit|End", myReporter.wholeStory())
 }
 
+func TestEmbeddedAssertionReported(t *testing.T) {
+	myReporter, test := setupFakeReporter()
+
+	Convey("A", test, func() {
+		ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+			So(r.FormValue("msg"), ShouldEqual, "ping")
+		}))
+		http.DefaultClient.Get(ts.URL + "?msg=ping")
+	})
+
+	expectEqual(t, "Begin|A|Success|Exit|End", myReporter.wholeStory())
+}
+
 func expectEqual(t *testing.T, expected interface{}, actual interface{}) {
 	if expected != actual {
 		_, file, line, _ := runtime.Caller(1)
@@ -184,12 +210,10 @@ func expectEqual(t *testing.T, expected interface{}, actual interface{}) {
 }
 
 func setupFakeReporter() (*fakeReporter, *fakeGoTest) {
-	myReporter := fakeReporter{}
+	myReporter := new(fakeReporter)
 	myReporter.calls = []string{}
-	reporter = &myReporter
-	runner = execution.NewRunner()
-	runner.UpgradeReporter(reporter)
-	return &myReporter, &fakeGoTest{}
+	testReporter = myReporter
+	return myReporter, new(fakeGoTest)
 }
 
 type fakeReporter struct {
@@ -231,3 +255,12 @@ func (self *fakeReporter) EndStory() {
 func (self *fakeReporter) wholeStory() string {
 	return strings.Join(self.calls, "|")
 }
+
+////////////////////////////////
+
+type fakeGoTest struct{}
+
+func (self *fakeGoTest) Fail()                                     {}
+func (self *fakeGoTest) Fatalf(format string, args ...interface{}) {}
+
+var test t = new(fakeGoTest)
