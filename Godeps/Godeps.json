@@ -1,26 +1,26 @@
 {
-	"ImportPath": "cider-collector-github",
-	"GoVersion": "go1.2",
+	"ImportPath": "github.com/salsita-cider/cider-collector-github",
+	"GoVersion": "go1.2.1",
 	"Deps": [
 		{
 			"ImportPath": "github.com/cider/go-cider/cider/services",
-			"Rev": "f29c42df60a721886a05c17d1b8f4dd3b5a4e8d3"
+			"Rev": "eee8f7e9d3b5f2feba2839ec0fb774b3a5c19aa8"
 		},
 		{
 			"ImportPath": "github.com/cider/go-cider/cider/transports/zmq3/logging",
-			"Rev": "f29c42df60a721886a05c17d1b8f4dd3b5a4e8d3"
+			"Rev": "eee8f7e9d3b5f2feba2839ec0fb774b3a5c19aa8"
 		},
 		{
 			"ImportPath": "github.com/cider/go-cider/cider/transports/zmq3/loop",
-			"Rev": "f29c42df60a721886a05c17d1b8f4dd3b5a4e8d3"
+			"Rev": "eee8f7e9d3b5f2feba2839ec0fb774b3a5c19aa8"
 		},
 		{
 			"ImportPath": "github.com/cider/go-cider/cider/transports/zmq3/pubsub",
-			"Rev": "f29c42df60a721886a05c17d1b8f4dd3b5a4e8d3"
+			"Rev": "eee8f7e9d3b5f2feba2839ec0fb774b3a5c19aa8"
 		},
 		{
 			"ImportPath": "github.com/cider/go-cider/cider/utils/codecs",
-			"Rev": "f29c42df60a721886a05c17d1b8f4dd3b5a4e8d3"
+			"Rev": "eee8f7e9d3b5f2feba2839ec0fb774b3a5c19aa8"
 		},
 		{
 			"ImportPath": "github.com/cihub/seelog",
@@ -41,16 +41,16 @@
 		},
 		{
 			"ImportPath": "github.com/salsita-cider/cider-webhook-receiver",
-			"Rev": "ea6d3e468e798a8c41bb1138db1582c3170138c3"
+			"Rev": "44c8dfa59252fd42ec256f873db5a040b75fb6ed"
 		},
 		{
 			"ImportPath": "github.com/smartystreets/goconvey/convey",
-			"Comment": "1.5.0-168-g2abea07",
-			"Rev": "2abea075ec076abf0572d29bdb28ae7da64cfb7a"
+			"Comment": "1.5.0-178-gefb168e",
+			"Rev": "efb168eea692045f2ea16526c2e1fcebd065d010"
 		},
 		{
 			"ImportPath": "github.com/tchap/go-patricia/patricia",
-			"Rev": "f856ac5e417afc5c20b59996f80ea6b0dad3e29b"
+			"Rev": "e30e8fa979d547ec295b7252d1ef936235f342d0"
 		},
 		{
 			"ImportPath": "github.com/ugorji/go/codec",
