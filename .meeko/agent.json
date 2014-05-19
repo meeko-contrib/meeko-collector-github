@@ -1,13 +1,13 @@
 {
-  "name": "cider-collector-github",
+  "name": "meeko-collector-github",
   "version": "0.0.1",
-  "description": "Cider collector for GitHub events",
+  "description": "Meeko collector for GitHub events",
   "variables": {
     "LISTEN_ADDRESS": {
       "usage": "TCP network address to listen on; format [HOST]:PORT"
     },
     "ACCESS_TOKEN": {
-      "usage": "token being used for request authentication",
+      "usage": "token to be used for GitHub hooks authentication",
       "secret": true
     }
   }
