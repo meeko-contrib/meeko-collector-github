@@ -1,6 +1,9 @@
 {
 	"ImportPath": "github.com/meeko-contrib/meeko-collector-github",
 	"GoVersion": "go1.2.2",
+	"Packages": [
+		"./..."
+	],
 	"Deps": [
 		{
 			"ImportPath": "github.com/cihub/seelog",
@@ -10,6 +13,10 @@
 		{
 			"ImportPath": "github.com/dmotylev/nutrition",
 			"Rev": "9a305a8ca773d89a1770aebc82efc6e1c7bbd4ea"
+		},
+		{
+			"ImportPath": "github.com/jacobsa/oglematchers",
+			"Rev": "4fc24f97b5b74022c2a3f4ca7eed57ca29083d3e"
 		},
 		{
 			"ImportPath": "github.com/meeko-contrib/go-meeko-webhook-receiver/receiver",
@@ -46,6 +53,11 @@
 		{
 			"ImportPath": "github.com/pebbe/zmq3",
 			"Rev": "864ffc49d2e319fbaec3d0b3290b34241c1653b1"
+		},
+		{
+			"ImportPath": "github.com/smartystreets/goconvey/convey",
+			"Comment": "1.5.0-202-gfd5c498",
+			"Rev": "fd5c4988a75e59413a8ca9511ac152e70459d37a"
 		},
 		{
 			"ImportPath": "github.com/tchap/go-patricia/patricia",
