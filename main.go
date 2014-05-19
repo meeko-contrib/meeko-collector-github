@@ -17,13 +17,18 @@
 
 package main
 
-import receiver "github.com/salsita-cider/cider-webhook-receiver"
+import (
+	"github.com/meeko-contrib/meeko-collector-github/handler"
+
+	"github.com/meeko-contrib/go-meeko-webhook-receiver/receiver"
+	"github.com/meeko/go-meeko/agent"
+)
 
 func main() {
-	receiver.ListenAndServe(&GitHubWebhookHandler{
+	receiver.ListenAndServe(&handler.GitHubWebhookHandler{
 		func(eventType string, eventObject interface{}) error {
-			receiver.Logger.Infof("Forwarding %s", eventType)
-			return receiver.PubSub.Publish(eventType, eventObject)
+			agent.Logging.Infof("Forwarding %s", eventType)
+			return agent.PubSub.Publish(eventType, eventObject)
 		},
 	})
 }
