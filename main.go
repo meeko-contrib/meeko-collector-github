@@ -18,7 +18,7 @@
 package main
 
 import (
-	"github.com/meeko-contrib/meeko-collector-github/handler"
+	"meeko-collector-github/handler"
 
 	"github.com/meeko-contrib/go-meeko-webhook-receiver/receiver"
 	"github.com/meeko/go-meeko/agent"
