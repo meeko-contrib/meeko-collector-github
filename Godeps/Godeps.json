@@ -20,35 +20,35 @@
 		},
 		{
 			"ImportPath": "github.com/meeko-contrib/go-meeko-webhook-receiver/receiver",
-			"Rev": "237ef19d35e0dae02f78c0fc44a36ed1e3f2b08f"
+			"Rev": "1cc11e64c0d13a7a740bd7a08e011f4800ca7a51"
 		},
 		{
 			"ImportPath": "github.com/meeko/go-meeko/agent",
-			"Rev": "cc3771093cd973f26d1b7e53b01605da035055f0"
+			"Rev": "537b6f5c309580c9971091d36ee0bbc6cbb416cf"
 		},
 		{
 			"ImportPath": "github.com/meeko/go-meeko/meeko/services",
-			"Rev": "cc3771093cd973f26d1b7e53b01605da035055f0"
+			"Rev": "537b6f5c309580c9971091d36ee0bbc6cbb416cf"
 		},
 		{
 			"ImportPath": "github.com/meeko/go-meeko/meeko/transports/zmq3/logging",
-			"Rev": "cc3771093cd973f26d1b7e53b01605da035055f0"
+			"Rev": "537b6f5c309580c9971091d36ee0bbc6cbb416cf"
 		},
 		{
 			"ImportPath": "github.com/meeko/go-meeko/meeko/transports/zmq3/loop",
-			"Rev": "cc3771093cd973f26d1b7e53b01605da035055f0"
+			"Rev": "537b6f5c309580c9971091d36ee0bbc6cbb416cf"
 		},
 		{
 			"ImportPath": "github.com/meeko/go-meeko/meeko/transports/zmq3/pubsub",
-			"Rev": "cc3771093cd973f26d1b7e53b01605da035055f0"
+			"Rev": "537b6f5c309580c9971091d36ee0bbc6cbb416cf"
 		},
 		{
 			"ImportPath": "github.com/meeko/go-meeko/meeko/transports/zmq3/rpc",
-			"Rev": "cc3771093cd973f26d1b7e53b01605da035055f0"
+			"Rev": "537b6f5c309580c9971091d36ee0bbc6cbb416cf"
 		},
 		{
 			"ImportPath": "github.com/meeko/go-meeko/meeko/utils/codecs",
-			"Rev": "cc3771093cd973f26d1b7e53b01605da035055f0"
+			"Rev": "537b6f5c309580c9971091d36ee0bbc6cbb416cf"
 		},
 		{
 			"ImportPath": "github.com/pebbe/zmq3",
@@ -61,8 +61,8 @@
 		},
 		{
 			"ImportPath": "github.com/tchap/go-patricia/patricia",
-			"Comment": "v1.0.0-1-g56e2ecc",
-			"Rev": "56e2eccb7902e31aacc27e695825e74cecf8d596"
+			"Comment": "v1.0.0-4-gaf30781",
+			"Rev": "af307814d2e14f7f50e44da46b89309341a60638"
 		},
 		{
 			"ImportPath": "github.com/ugorji/go/codec",

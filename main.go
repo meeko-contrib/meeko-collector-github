@@ -25,10 +25,14 @@ import (
 )
 
 func main() {
+	var (
+		logger    = agent.Logging()
+		publisher = agent.PubSub()
+	)
 	receiver.ListenAndServe(&handler.GitHubWebhookHandler{
 		func(eventType string, eventObject interface{}) error {
-			agent.Logging.Infof("Forwarding %s", eventType)
-			return agent.PubSub.Publish(eventType, eventObject)
+			logger.Infof("Forwarding %s", eventType)
+			return publisher.Publish(eventType, eventObject)
 		},
 	})
 }
