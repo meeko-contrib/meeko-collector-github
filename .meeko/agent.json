@@ -2,6 +2,7 @@
   "name": "meeko-collector-github",
   "version": "0.0.1",
   "description": "Meeko collector for GitHub events",
+  "clone_dir": "github.com/meeko-contrib/meeko-collector-github",
   "variables": {
     "LISTEN_ADDRESS": {
       "usage": "TCP network address to listen on; format [HOST]:PORT"
